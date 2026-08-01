@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>HTTP Pilot</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #202124;
+            color: white;
+        }
+
+        .container {
+            display: grid;
+            gap: 16px;
+            width: 320px;
+        }
+
+        button {
+            padding: 18px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: .9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button onclick="sendCommand('play_pause')">⏯ Play / Pause</button>
+    <button onclick="sendCommand('next_episode')">⏭ Next Episode</button>
+    <button onclick="sendCommand('previous_episode')">⏮ Previous Episode</button>
+    <button onclick="sendCommand('fullscreen')">⛶ Fullscreen</button>
+</div>
+
+<script>
+async function sendCommand(action) {
+    const response = await fetch("/command", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: action
+        })
+    });
+
+    const result = await response.json();
+    console.log(result);
+}
+</script>
+
+</body>
+</html>
